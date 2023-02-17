@@ -1,0 +1,11 @@
+{
+  "name": "bemol-digital",
+  "version": "1.0.0",
+  "description": "Prova Técnica Bemol Digital",
+  "main": "index.js",
+  "author": "Lucas Chixaro",
+  "license": "MIT",
+  "devDependencies": {
+    "cypress": "12.2.0"
+  }
+}
