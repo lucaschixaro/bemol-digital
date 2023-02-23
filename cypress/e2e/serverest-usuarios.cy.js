@@ -2,22 +2,23 @@
 
 describe('Usuario', () => {
     it('Deve criar um usuário', () =>{
-        cy.request({
-            url: 'https://serverest.dev/usuarios',
-            method: 'POST',
-            body: {
-            'nome': 'lucas-bemol',
-            'email': 'lucasbemol@qa.com.br',
-            'password':'teste',
-            'administrador': 'true'
+        
+        const serverestUrlUsers = 'https://serverest.dev/usuarios/'
+        const createUser = {
+            nome: 'Lucas QA',
+            email: 'lucasqabemol1@bemol.com.br',
+            password: 'teste',
+            administrador: 'true'
         }
-        }).then(response => {
+
+        cy.createUserCommand(createUser)
+        .then(response => {
             expect(response.status).to.eq(201)
         })
         cy.request({
-            url: 'https://serverest.dev/usuarios',
+            url: serverestUrlUsers,
             method: 'GET',
-            qs: {'nome':'lucas-bemol'}
+            qs: {email:createUser.email}
         })
         .then(response => {
             expect(response.status).to.eq(200)
@@ -27,7 +28,7 @@ describe('Usuario', () => {
         // Delete do usuário para manter assertividade do teste e não sujar base de dados
         .its('body.usuarios[0]._id')
         .then((id) => {
-            const url = `https://serverest.dev/usuarios/${id}`
+            const url = serverestUrlUsers + id
             cy.request('DELETE', url)
         })
         .then(response => {

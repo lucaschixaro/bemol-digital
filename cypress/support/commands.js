@@ -23,3 +23,22 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('createUserCommand', (createUser)=> {
+    cy.request({
+        url: 'https://serverest.dev/usuarios',
+        method: 'POST',
+        body: createUser
+    })
+})
+
+// Criação de custom commands para Login
+Cypress.Commands.add('serverestLogin', (createUser, serverestUrlLogin) =>{
+    cy.request({
+        method: 'POST',
+        url: serverestUrlLogin,
+        body: {email:createUser.email, password:createUser.password}
+    }).then((response) => {
+        cy.wrap(response).as('loginResponse');
+    })
+})
